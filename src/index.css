@@ -1,0 +1,324 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+ * Design tokens (Tailwind v4 @theme).
+ * Every token below becomes a utility, e.g. --color-accent -> bg-accent/text-accent.
+ * Edit these first when you want to re-skin the site.
+ * ------------------------------------------------------------------------- */
+@theme {
+  --color-ink: #07070b;
+  --color-ink-2: #0d0d14;
+  --color-ink-3: #14141f;
+  --color-paper: #f4f4f7;
+  --color-muted: #9a99a8;
+  --color-line: #23232e;
+
+  --color-accent: #ff4d8d;
+  --color-accent-2: #7c5cff;
+
+  --font-display: 'Anton', 'Arial Narrow', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ---------------------------------------------------------------------------
+ * Lenis (smooth scroll) required styles.
+ * ------------------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* `clip` (not `hidden`) so full-bleed layers can't cause sideways scroll
+       while position: sticky keeps working. */
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  /* Display typography — the cinematic voice of the site. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+  }
+
+  /* Thin film-grain overlay, sits above everything and is not interactive. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Faint blueprint grid used as a background texture. */
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /* -------------------------------------------------------------------------
+   * Fire motif — echoes the two colourways of the brand logo.
+   * ----------------------------------------------------------------------- */
+
+  /* Gradient text: orange -> red -> violet, straight from the logo. */
+  .text-fire {
+    background-image: linear-gradient(100deg, #ff8a2f 0%, #ff4d3d 38%, #b45cff 72%, #7c5cff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Giant section index used as a watermark. */
+  .section-index {
+    position: absolute;
+    top: -0.12em;
+    right: 0;
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 20vw, 18rem);
+    line-height: 0.78;
+    color: rgb(255 255 255 / 0.035);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Soft warm/cool colour field placed behind section content. */
+  .ember-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  /* Elevated band used to alternate section surfaces. */
+  .band {
+    background:
+      linear-gradient(
+        180deg,
+        transparent,
+        rgb(255 255 255 / 0.03) 16%,
+        rgb(255 255 255 / 0.03) 84%,
+        transparent
+      ),
+      radial-gradient(70% 60% at 50% 0%, rgb(150 80 255 / 0.07), transparent 70%);
+  }
+
+  /* -------------------------------------------------------------------------
+   * Brand logo.
+   * Two colourways (orange / violet) crossfade into each other, the mark
+   * breathes, and it "ignites" with a wipe on mount. All gated on
+   * prefers-reduced-motion at the bottom of this file.
+   * ----------------------------------------------------------------------- */
+  .logo {
+    position: relative;
+    display: inline-block;
+    aspect-ratio: 900 / 452;
+    --logo-glow-blur: 28px;
+    --logo-glow-inset: -14%;
+  }
+
+  /* Smaller variant (e.g. navbar): the glow has to shrink with the mark. */
+  .logo--compact {
+    --logo-glow-blur: 9px;
+    --logo-glow-inset: -6%;
+  }
+
+  .logo__glow {
+    position: absolute;
+    inset: var(--logo-glow-inset);
+    filter: blur(var(--logo-glow-blur));
+    pointer-events: none;
+  }
+
+  .logo__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Wrapper that carries sway + flicker, so they compose with the breathing
+     scale on .logo without fighting over the same property. */
+  .logo__inner {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Static default: orange colourway only. */
+  .logo__phase-a {
+    opacity: 1;
+  }
+  .logo__phase-b {
+    opacity: 0;
+  }
+
+  .logo--animated {
+    animation:
+      logo-ignite 1.4s cubic-bezier(0.16, 1, 0.3, 1) both,
+      logo-breathe 6s ease-in-out 1.4s infinite;
+  }
+  .logo--animated .logo__phase-a {
+    animation: logo-swap 9s ease-in-out infinite;
+  }
+  .logo--animated .logo__phase-b {
+    animation: logo-swap 9s ease-in-out infinite;
+    animation-delay: -4.5s;
+  }
+
+  /* Fire life: an irregular flicker + a slow sway. The two durations (4.2s and
+     5.5s) are deliberately out of step with each other and with the breath
+     (7s), so the combined motion never lands on an obvious loop. */
+  .logo--animated .logo__inner {
+    animation:
+      logo-flicker 3.6s linear infinite,
+      logo-sway 5.5s ease-in-out infinite;
+  }
+}
+
+@keyframes logo-swap {
+  0%,
+  42% {
+    opacity: 1;
+  }
+  50%,
+  92% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes logo-breathe {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.07) translateY(-2%);
+  }
+}
+
+/* Irregular, flame-like stutter. Not a smooth wave — that reads as a pulse,
+   not as fire. The minimum (0.74) is a floor on purpose: dip much below that
+   and it stops reading as fire and starts reading as a broken light. */
+@keyframes logo-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0.78;
+  }
+  11% {
+    opacity: 0.98;
+  }
+  22% {
+    opacity: 0.86;
+  }
+  27% {
+    opacity: 1;
+  }
+  41% {
+    opacity: 0.74;
+  }
+  46% {
+    opacity: 0.95;
+  }
+  58% {
+    opacity: 0.88;
+  }
+  63% {
+    opacity: 1;
+  }
+  79% {
+    opacity: 0.8;
+  }
+  84% {
+    opacity: 0.97;
+  }
+}
+
+/* A flame leans. Very small angles on purpose. */
+@keyframes logo-sway {
+  0%,
+  100% {
+    transform: rotate(-0.7deg) skewX(0.5deg);
+  }
+  50% {
+    transform: rotate(0.7deg) skewX(-0.5deg);
+  }
+}
+
+@keyframes logo-ignite {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    filter: brightness(2.4);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo--animated,
+  .logo--animated .logo__phase-a,
+  .logo--animated .logo__phase-b,
+  .logo--animated .logo__inner {
+    animation: none !important;
+  }
+  .logo__phase-a {
+    opacity: 1 !important;
+  }
+  .logo__phase-b {
+    opacity: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
