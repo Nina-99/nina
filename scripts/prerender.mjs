@@ -21,18 +21,10 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, extname, join, normalize } from 'node:path'
 import puppeteer from 'puppeteer'
 import { readProductSlugs } from './products.mjs'
+import { resolveSiteUrl } from './site-url.mjs'
 
 const distPath = new URL('../dist/', import.meta.url).pathname
 const projectRoot = new URL('../', import.meta.url)
-
-function resolveSiteUrl() {
-  if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '')
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  }
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return ''
-}
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',

@@ -8,19 +8,10 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { readProductSlugs } from './products.mjs'
+import { resolveSiteUrl } from './site-url.mjs'
 
 const root = new URL('../', import.meta.url)
 const dist = new URL('../dist/', import.meta.url)
-
-function resolveSiteUrl() {
-  if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '')
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  }
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  // Local builds: replace with your real domain, or set SITE_URL.
-  return 'https://TU-DOMINIO.com'
-}
 
 const siteUrl = resolveSiteUrl()
 const slugs = readProductSlugs(root)

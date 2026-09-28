@@ -232,11 +232,11 @@ Other SEO pieces:
 
 1. Push the repository to GitHub/GitLab/Bitbucket (or run `vercel` from the CLI).
 2. Import the project in Vercel. It auto-detects the framework from `vercel.json`.
-3. Set the environment variable **`SITE_URL`** to your production domain, e.g. `https://nina.dev`.
+3. **`SITE_URL` es opcional.** The production URL is already pinned to
+   `https://ninabuild.vercel.app` in `scripts/site-url.mjs`, and on Vercel the project's own
+   production URL is used automatically. Set `SITE_URL` only to override it (e.g. a custom domain).
 
-   This is what makes canonical URLs, Open Graph images and the sitemap absolute. If it is unset,
-   Vercel's own production URL is used automatically; if that is also unavailable the tags fall back
-   to relative paths and social previews will not show an image.
+   This value is what makes canonical URLs, Open Graph images and the sitemap absolute.
 
 4. Deploy.
 
