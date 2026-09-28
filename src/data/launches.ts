@@ -35,7 +35,7 @@ export const launches: Launch[] = [
   {
     id: "orbit",
     title: "Orbit",
-    subtitle: "El kit de los que construyen",
+    subtitle: "El kit de los que forman",
     date: "Marzo 2027",
     accent: "#a78bfa",
     accent2: "#6366f1",

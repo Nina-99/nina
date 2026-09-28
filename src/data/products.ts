@@ -203,7 +203,7 @@ export const products: Product[] = [
   {
     slug: "orbit",
     name: "Orbit",
-    category: "Developer tools",
+    category: "Marketplace de fútbol",
     tagline: "El kit de herramientas para los que construyen.",
     summary:
       "Una plataforma que da una solución integral multiescuela para revolucionar el fútbol formativo.",
