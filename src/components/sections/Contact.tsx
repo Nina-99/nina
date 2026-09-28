@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { site } from '../../data/site'
+import { whatsappLink } from '../../lib/contact'
 import { Reveal } from '../Reveal'
 import { RevealText } from '../RevealText'
 
@@ -74,8 +75,19 @@ export function Contact() {
                     {site.email}
                   </a>
                 </li>
-                <li className="text-muted">{site.phone}</li>
-                <li className="text-muted">{site.location}</li>
+                <li>
+                  <a
+                    href={whatsappLink(
+                      "Hola! Quiero consultar por los productos de Nina.",
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition-colors hover:text-accent"
+                  >
+                    {site.phone}
+                  </a>
+                  <span className="ml-2 text-muted">WhatsApp</span>
+                </li>                <li className="text-muted">{site.location}</li>
               </ul>
             </Reveal>
           </div>
