@@ -212,28 +212,6 @@ html.lenis body {
       logo-flicker 3.6s linear infinite,
       logo-sway 5.5s ease-in-out infinite;
   }
-
-  /* Caret for the hero typewriter. */
-  .type-cursor {
-    display: inline-block;
-    width: 0.07em;
-    height: 0.76em;
-    margin-left: 0.09em;
-    background-color: currentColor;
-    animation: type-caret 1.05s ease-in-out infinite;
-  }
-
-  /* Hero headline line. Generated content reserves the final layout so nothing
-     jumps while typing, without duplicating the text in the DOM — which a
-     crawler would read twice. */
-  .type-line {
-    position: relative;
-    display: block;
-  }
-  .type-line::before {
-    content: attr(data-text);
-    visibility: hidden;
-  }
 }
 
 @keyframes logo-swap {
@@ -308,17 +286,6 @@ html.lenis body {
   }
   50% {
     transform: rotate(0.7deg) skewX(-0.5deg);
-  }
-}
-
-@keyframes type-caret {
-  0%,
-  45% {
-    opacity: 1;
-  }
-  55%,
-  100% {
-    opacity: 0;
   }
 }
 

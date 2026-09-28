@@ -4,7 +4,6 @@ import { useLayoutEffect, useRef } from "react";
 import { site } from "../../data/site";
 import { scrollToSection } from "../../lib/lenis";
 import { useReducedMotion } from "../../lib/useReducedMotion";
-import { useTypewriter } from "../../lib/useTypewriter";
 import { EmberField } from "../EmberField";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,24 +16,21 @@ export function Hero() {
   const root = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
 
-  const { typed, activeLine } = useTypewriter(site.heroLines, {
-    enabled: !reduced,
-    charsPerSecond: 24,
-    startDelay: 700,
-  });
-
   useLayoutEffect(() => {
     if (reduced) return;
 
     const ctx = gsap.context(() => {
-      // The headline types itself in, so the timeline stages the rest and
-      // holds the intro back until the typing has had room to breathe.
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.from('[data-hero="eyebrow"]', { autoAlpha: 0, y: 20, duration: 0.8 })
         .from(
+          '[data-hero="line"]',
+          { yPercent: 120, duration: 1.1, stagger: 0.12, ease: "power4.out" },
+          "-=0.4",
+        )
+        .from(
           '[data-hero="intro"], [data-hero="actions"]',
           { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.15 },
-          "+=1.2",
+          "-=0.6",
         )
         .from('[data-hero="cue"]', { autoAlpha: 0, duration: 0.6 }, "-=0.3");
 
@@ -97,21 +93,11 @@ export function Hero() {
           {site.heroEyebrow}
         </p>
 
-        <h1
-          className="display mt-6 text-[clamp(2.75rem,10vw,7.5rem)]"
-          aria-label={site.heroLines.join(" ")}
-        >
-          {site.heroLines.map((line, index) => (
-            <span
-              key={line}
-              className="type-line block pb-[0.08em]"
-              data-text={line}
-            >
-              {/* The space is reserved by generated content (see .type-line in
-                  index.css), so the DOM text holds the headline exactly once. */}
-              <span className="absolute inset-0" aria-hidden="true">
-                {typed[index]}
-                {!reduced && index === activeLine && <span className="type-cursor" />}
+        <h1 className="display mt-6 text-[clamp(2.75rem,10vw,7.5rem)]">
+          {site.heroLines.map((line) => (
+            <span key={line} className="block overflow-hidden pb-[0.08em]">
+              <span data-hero="line" className="block">
+                {line}
               </span>
             </span>
           ))}
