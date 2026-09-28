@@ -28,7 +28,7 @@ export function About() {
         <RevealText
           as="h2"
           text={site.about.title}
-          className="display mt-4 max-w-3xl text-[clamp(2rem,6vw,4.5rem)]"
+          className="display mt-4 max-w-3xl text-[clamp(2rem,6vw,4rem)]"
         />
 
         <div className="mt-16 grid gap-12 md:grid-cols-2">

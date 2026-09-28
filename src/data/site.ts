@@ -20,7 +20,7 @@ export const site = {
   location: "Oruro, Bolivia",
 
   // Hero headline, split into lines so each one can animate on its own.
-  heroLines: ["Forjamos el software", "que hace arder tus", "resultados."],
+  heroLines: ["Forjamos tecnología", "que enciende tu", "futuro."],
   heroEyebrow: "Estudio de producto · Desde 2025",
   heroIntro:
     "Diseñamos, construimos y operamos productos de software que resuelven problemas concretos. Sin humo.",
@@ -43,11 +43,13 @@ export const site = {
   about: {
     eyebrow: "Quienes somos",
     /* Words wrapped in *asterisks* are painted with the fire gradient. */
-    title: "Un equipo chico, *obsesionado* con el detalle.",
+    // title: "Un equipo chico, *obsesionado* con el detalle.",
+    title:
+      "Un equipo compacto de alto rendimiento *comprometido* con el rigor técnico.",
     paragraphs: [
       "Somos ingenieros de producto que se cansaron de la 'tecnología de escaparate': esa que luce impecable en una demostración, pero colapsa cuando el negocio real entra producción.",
       "No desarrollamos software aislado para una empresa en particular; construimos la plataforma que hace evolucionar a sectores enteros.",
-      "Nacimos en 2025 automatizando operaciones donde más dolía. Esa obsesión por eliminar procesos manuales y cuellos de botella nos enseñó algo fundamental: el verdadero impacto no está en digitalizar un negocio a la vez, sino en poner en órbita a comunidades e industrias completas",
+      "Nacimos en 2025 automatizando operaciones donde más dolía. Esa obsesión por eliminar procesos manuales y cuellos de botella nos enseñó algo fundamental: el verdadero impacto no está en digitalizar un negocio a la vez, sino en poner en órbita a comunidades e industrias completas.",
     ],
     stats: [
       { value: "+40", label: "Equipos usando Nina" },
