@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <script>
+      // The app owns the scroll position (see src/components/Layout.tsx).
+      // Without this the browser restores the previous offset on reload, and a
+      // visitor who refreshes mid-page lands past the hero — which also means
+      // the hero entrance animation plays off-screen, unseen.
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    </script>
+
     <title>Nina — Productos de software</title>
     <meta
       name="description"
