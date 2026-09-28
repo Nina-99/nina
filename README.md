@@ -125,6 +125,28 @@ ffmpeg -i input.mp4 -vf scale=720:1280 -c:v libx264 -crf 24 -preset slow \
 `-movflags +faststart` moves the index to the front so playback can start before the file finishes
 downloading.
 
+## Contact form
+
+The form at `#contacto` has two delivery paths, both handled in `src/lib/contact.ts`:
+
+1. **Email (Formspree / Web3Forms)** — `sendContactMessage` posts JSON to the endpoint.
+2. **WhatsApp** — the secondary button opens `wa.me` with the form contents prefilled.
+
+Configure path 1 with environment variables. They are read at **build time**, so set them in
+Vercel → Settings → Environment Variables (a local `.env` only affects local builds):
+
+| Variable                | Notes                                                      |
+| ----------------------- | ---------------------------------------------------------- |
+| `VITE_CONTACT_ENDPOINT` | Formspree URL, or `https://api.web3forms.com/submit`        |
+| `VITE_CONTACT_KEY`      | Only for Web3Forms; sent as `access_key`                    |
+
+See `.env.example`. **If the endpoint is unset the form fails loudly** — it reports the failure and
+points at WhatsApp rather than showing a fake success. In development it also prints a hint.
+
+> These values ship inside the client bundle. That is by design — Formspree form ids and Web3Forms
+> access keys are public and are protected by domain allow-lists on the provider side. Never put a
+> real secret in a `VITE_` variable.
+
 ## Design system
 
 All design tokens live in the `@theme` block of `src/index.css`. Every token becomes a Tailwind
