@@ -86,7 +86,7 @@ export function Product() {
   return (
     <article ref={root}>
       <Seo
-        title={`${product.name} — Nina`}
+        title={`${product.name} — Nina | ninabuild`}
         description={product.summary}
         jsonLd={{
           '@context': 'https://schema.org',

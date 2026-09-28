@@ -13,7 +13,7 @@ export function Home() {
   return (
     <>
       <Seo
-        title="Nina — Productos de software"
+        title="Nina — Productos de software | ninabuild"
         description="Nina construye productos de software. Conocé Yottu, el marketplace que conecta centros de belleza de todo tipo con sus clientes: reservas, mapa, calificaciones y pago por tokens."
         jsonLd={{
           '@context': 'https://schema.org',
